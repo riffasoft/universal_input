@@ -1,12 +1,8 @@
-# universal_input
-universal_input adalah fungsi Python serbaguna untuk mengambil input dari user dengan validasi otomatis sesuai tipe data yang diinginkan.
-Sip 👍, saya akan buatkan dokumentasi lengkap (gaya **README.md**) untuk fungsi `universal_input` agar bisa langsung kamu masukkan ke GitHub. Saya akan jelaskan fitur, parameter, return value, contoh penggunaan, termasuk bagian tambahan seperti auto-create file/folder.
-
-# 📌 `universal_input` – Fungsi Input Serbaguna di Python
+# 📌 `universal_input` – Fungsi Utilities Input Serbaguna di Python
 
 ## ✨ Deskripsi
 
-`universal_input` adalah fungsi Python serbaguna untuk mengambil input dari user dengan validasi otomatis sesuai tipe data yang diinginkan.
+`universal_input` adalah fungsi Utilities Python serbaguna untuk mengambil input dari user dengan validasi otomatis sesuai tipe data yang diinginkan.
 Fungsi ini mendukung berbagai jenis input, mulai dari **string**, **integer**, **float**, **option (pilihan)**, hingga **file** dan **folder** dengan pengecekan keberadaan serta opsi **auto-create**.
 
 Fitur ini berguna untuk membuat aplikasi CLI yang lebih **user-friendly**, **aman**, dan **fleksibel**.
