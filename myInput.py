@@ -3,7 +3,7 @@ import re
 import time
 import getpass
 
-def myInput(
+def universal_input(
     title="Masukkan nilai:",
     data_type="str",            # str, int, float, option, password, multiselect, file, folder
     options=None,
