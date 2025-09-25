@@ -18,6 +18,53 @@ def myInput(
     auto_create=False,          # buat file/folder kalau tidak ada
     confirm_create=True         # konfirmasi dulu sebelum auto-create
 ):
+    
+    """
+    Fungsi input interaktif dengan validasi otomatis.
+
+    Parameters
+    ----------
+    title : str
+        Pesan prompt.
+    data_type : str
+        Jenis data input. Pilihan:
+        - "str"
+        - "int"
+        - "float"
+        - "option"
+        - "password"
+        - "multiselect"
+        - "file"
+        - "folder"
+    options : list, optional
+        Opsi pilihan jika data_type="option" atau "multiselect".
+    default : Any, optional
+        Nilai default jika input kosong / gagal.
+    error_message : str
+        Pesan jika validasi gagal.
+    use_default_on_error : bool
+        Gunakan default jika input gagal divalidasi.
+    allow_empty : bool
+        Boleh kosong.
+    validator : Callable, optional
+        Fungsi validasi custom.
+    regex : str, optional
+        Regex untuk validasi tambahan.
+    max_retry : int, optional
+        Jumlah percobaan maksimal.
+    timeout : int, optional
+        Timeout dalam detik.
+    auto_create : bool
+        Buat file/folder jika tidak ada.
+    confirm_create : bool
+        Konfirmasi sebelum auto-create.
+
+    Returns
+    -------
+    Any
+        Nilai input sesuai data_type.
+    """
+    
     start_time = time.time()
     attempts = 0
     
@@ -135,31 +182,3 @@ def myInput(
             print("❌ Terlalu banyak percobaan. menggunakan default.")
             return default
 
-
-# ==============================
-# CONTOH PENGGUNAAN
-# ==============================
-
-# Input file dengan auto-create + konfirmasi
-path_file = myInput(
-    "Masukkan path file:", 
-    data_type="file", 
-    error_message="Path file tidak valid!", 
-    default="example.txt",
-    auto_create=True,
-    confirm_create=True
-)
-
-# Input folder dengan auto-create + konfirmasi
-path_folder = myInput(
-    "Masukkan path folder:", 
-    data_type="folder", 
-    error_message="Path folder tidak valid!", 
-    default="./data",
-    auto_create=True,
-    confirm_create=True
-)
-
-print("\nHasil Input:")
-print("File   :", path_file)
-print("Folder :", path_folder)
