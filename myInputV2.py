@@ -121,6 +121,10 @@ def universal_input(
             if not files:
                 filter_desc = file_filter if isinstance(file_filter, str) else ", ".join(file_filter)
                 print(f"❌ Tidak ditemukan file dengan filter '{filter_desc}' di direktori '{scan_directory}'")
+                
+                # TAMBAHKAN INI: Increment attempts dan cek max_retry
+                attempts += 1
+                
                 if use_default_on_error and default is not None:
                     print(f"→ menggunakan default: {default}")
                     return default
@@ -128,7 +132,12 @@ def universal_input(
                     print("❌ Terlalu banyak percobaan. menggunakan default.")
                     return default
                 else:
-                    attempts += 1
+                    # Tanya user apakah ingin mencoba lagi atau menggunakan default
+                    if default is not None:
+                        retry_prompt = input("Apakah ingin mencoba lagi? (y/n, default n): ").strip().lower()
+                        if retry_prompt not in ['y', 'yes', 'ya']:
+                            print(f"→ menggunakan default: {default}")
+                            return default
                     continue
             
             print(f"\n{title}")
@@ -199,7 +208,7 @@ def universal_input(
                 choice = int(raw)
                 if 1 <= choice <= len(files):
                     selected_file = output_files[choice - 1]
-                    print(f"✅ File dipilih: {selected_file}")
+                    #print(f"✅ File dipilih: {selected_file}")
                     return selected_file
                 else:
                     print(f"{error_message} (Pilihan harus antara 1-{len(files)})")
@@ -212,7 +221,7 @@ def universal_input(
                 
                 if len(matched_files) == 1:
                     selected_file = matched_files[0][1]
-                    print(f"✅ File dipilih: {selected_file}")
+                    #print(f"✅ File dipilih: {selected_file}")
                     return selected_file
                 elif len(matched_files) > 1:
                     print(f"❌ Multiple files match '{raw}'. Please use number selection:")
