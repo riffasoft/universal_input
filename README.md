@@ -173,6 +173,59 @@ file_gambar = universal_input(
 )
 ```
 
+### 8. Input Folder Boolean (dengan Piilhan file index)
+
+```python
+# Contoh 1: Boolean sederhana dengan default labels
+use_header = universal_input(
+    "> CSV punya header?",
+    data_type="boolean"
+)
+# Output:
+# > CSV punya header?
+#  0. false
+#  1. true
+# Pilih (0/1): 1  -> return True
+
+# Contoh 2: Boolean dengan custom labels
+use_header = universal_input(
+    "> CSV punya header?", 
+    data_type="boolean",
+    boolean_labels=["punya header", "tidak punya header"]
+)
+# Output:
+# > CSV punya header?
+#  0. tidak punya header
+#  1. punya header
+# Pilih (0/1): 1  -> return True
+
+# Contoh 3: Boolean dengan default value
+use_header = universal_input(
+    "> CSV punya header?",
+    data_type="boolean",
+    boolean_labels=["ya", "tidak"],
+    default=True
+)
+# Output:
+# > CSV punya header?
+#  0. tidak
+#  1. ya
+# Pilih (0/1) (Default: 1): [enter] -> return True
+
+# Contoh 4: Boolean dengan custom values
+use_header = universal_input(
+    "> CSV punya header?",
+    data_type="boolean", 
+    boolean_labels=["punya", "tidak punya"],
+    true_value="HAS_HEADER",
+    false_value="NO_HEADER"
+)
+# Output:
+# > CSV punya header?
+#  0. tidak punya
+#  1. punya
+# Pilih (0/1): 1  -> return "HAS_HEADER"
+```
 
 ## 🛠️ Catatan
 
