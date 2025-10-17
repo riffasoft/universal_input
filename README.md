@@ -128,6 +128,36 @@ print("Folder output:", folder_path)
 
 ---
 
+### 7. Input Folder (dengan Piilhan file index)
+
+```python
+# Contoh 1: Pilih file Python di direktori saat ini
+file_python = universal_input(
+    title="Silakan pilih file Python:",
+    data_type="fileselect",
+    file_filter="*.py",
+    scan_directory="."
+)
+
+# Contoh 2: Pilih file teks di folder tertentu
+file_teks = universal_input(
+    title="Pilih file teks:",
+    data_type="fileselect", 
+    file_filter="*.txt",
+    scan_directory="./documents",
+    default="readme.txt"
+)
+
+# Contoh 3: Pilih file dengan filter khusus
+file_gambar = universal_input(
+    title="Pilih file gambar:",
+    data_type="fileselect",
+    file_filter="*.jpg;*.png;*.gif",  # multiple filters
+    scan_directory="./images"
+)
+```
+
+
 ## 🛠️ Catatan
 
 * Untuk `file`, jika `auto_create=True`, fungsi akan membuat file kosong jika belum ada.
@@ -136,8 +166,3 @@ print("Folder output:", folder_path)
 
 ---
 
-👉 Dengan dokumentasi ini, kamu bisa langsung masukkan ke **GitHub** sebagai README untuk proyek CLI utilities.
-
----
-
-Apakah mau saya buatkan juga **contoh real project mini** (misalnya CLI config generator pakai fungsi ini), biar README di GitHub kamu lebih menarik?
