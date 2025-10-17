@@ -131,29 +131,42 @@ print("Folder output:", folder_path)
 ### 7. Input Folder (dengan Piilhan file index)
 
 ```python
-# Contoh 1: Pilih file Python di direktori saat ini
+# Contoh 1: Filter array dengan output nama file saja
 file_python = universal_input(
     title="Silakan pilih file Python:",
     data_type="fileselect",
-    file_filter="*.py",
-    scan_directory="."
+    file_filter=["csv", "txt"],
+    scan_directory="./csv",
+    output_type="filename"
 )
+print(file_python)  # Output: data.csv (hanya nama file)
 
-# Contoh 2: Pilih file teks di folder tertentu
-file_teks = universal_input(
-    title="Pilih file teks:",
+# Contoh 2: Filter array dengan output full path
+file_python = universal_input(
+    title="Silakan pilih file Python:",
     data_type="fileselect", 
-    file_filter="*.txt",
-    scan_directory="./documents",
-    default="readme.txt"
+    file_filter=["csv", "txt"],
+    scan_directory="./csv",
+    output_type="fullpath"
 )
+print(file_python)  # Output: /home/user/project/csv/data.csv (full path)
 
-# Contoh 3: Pilih file dengan filter khusus
+# Contoh 3: Filter array dengan output relative path
+file_python = universal_input(
+    title="Silakan pilih file Python:",
+    data_type="fileselect",
+    file_filter=["csv", "txt"], 
+    scan_directory="./csv",
+    output_type="relative"
+)
+print(file_python)  # Output: ./csv/data.csv (relative path)
+
+# Contoh 4: Mixed filter patterns
 file_gambar = universal_input(
     title="Pilih file gambar:",
     data_type="fileselect",
-    file_filter="*.jpg;*.png;*.gif",  # multiple filters
-    scan_directory="./images"
+    file_filter=["*.jpg", "png", ".gif"],  # Support berbagai format
+    output_type="filename"
 )
 ```
 
