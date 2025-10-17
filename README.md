@@ -147,7 +147,8 @@ file_python = universal_input(
     data_type="fileselect", 
     file_filter=["csv", "txt"],
     scan_directory="./csv",
-    output_type="fullpath"
+    output_type="fullpath",
+    max_retry=3
 )
 print(file_python)  # Output: /home/user/project/csv/data.csv (full path)
 
@@ -157,7 +158,8 @@ file_python = universal_input(
     data_type="fileselect",
     file_filter=["csv", "txt"], 
     scan_directory="./csv",
-    output_type="relative"
+    output_type="relative",
+    max_retry=3
 )
 print(file_python)  # Output: ./csv/data.csv (relative path)
 
@@ -166,7 +168,8 @@ file_gambar = universal_input(
     title="Pilih file gambar:",
     data_type="fileselect",
     file_filter=["*.jpg", "png", ".gif"],  # Support berbagai format
-    output_type="filename"
+    output_type="filename",
+    max_retry=3
 )
 ```
 
