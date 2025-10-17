@@ -6,7 +6,7 @@ import glob
 
 def universal_input(
     title="Masukkan nilai:",
-    data_type="str",            # str, int, float, option, password, multiselect, file, folder, fileselect
+    data_type="str",            # str, int, float, option, password, multiselect, file, folder, fileselect, boolean
     options=None,
     default=None,
     error_message="Input tidak valid!",
@@ -20,7 +20,10 @@ def universal_input(
     confirm_create=True,        # konfirmasi dulu sebelum auto-create
     file_filter="*",           # filter file untuk fileselect (string atau list)
     scan_directory=".",         # direktori untuk scan file
-    output_type="fullpath"     # "fullpath", "relative", "filename" untuk fileselect
+    output_type="fullpath",     # "fullpath", "relative", "filename" untuk fileselect
+    true_value=True,           # nilai untuk True (default: True)
+    false_value=False,         # nilai untuk False (default: False)
+    boolean_labels=None        # label untuk boolean (default: ["true", "false"])
 ):
     
     """
@@ -41,6 +44,7 @@ def universal_input(
         - "file"
         - "folder"
         - "fileselect"
+        - "boolean"
     options : list, optional
         Opsi pilihan jika data_type="option" atau "multiselect".
     default : Any, optional
@@ -69,6 +73,12 @@ def universal_input(
         Direktori untuk scan file.
     output_type : str
         Tipe output untuk fileselect: "fullpath", "relative", "filename".
+    true_value : Any
+        Nilai yang dikembalikan untuk True.
+    false_value : Any
+        Nilai yang dikembalikan untuk False.
+    boolean_labels : list
+        Label untuk boolean [label_true, label_false].
 
     Returns
     -------
@@ -79,11 +89,63 @@ def universal_input(
     start_time = time.time()
     attempts = 0
     
+    # Set default boolean labels
+    if boolean_labels is None:
+        boolean_labels = ["true", "false"]
+    
     while True:
         # Timeout check
         if timeout and (time.time() - start_time > timeout):
             print(f"\n⏰ Timeout! menggunakan default: {default}")
             return default
+
+        # Prompt khusus untuk boolean
+        if data_type == "boolean":
+            true_label = boolean_labels[0] if len(boolean_labels) > 0 else "true"
+            false_label = boolean_labels[1] if len(boolean_labels) > 1 else "false"
+            
+            # Tampilan yang lebih jelas dengan penomoran
+            print(f"\n{title}")
+            print(f" 0. {false_label}")
+            print(f" 1. {true_label}")
+            
+            # Format prompt
+            prompt = f"\n:: Select (0/1)"
+            if default is not None:
+                default_choice = 1 if default == true_value else 0
+                prompt += f" (Default: {default_choice}) "
+            prompt += ": "
+            
+            raw = input(prompt).strip().lower()
+            
+            # Handle input kosong
+            if raw == "":
+                if default is not None:
+                    return default
+                elif allow_empty:
+                    return None
+                else:
+                    print(error_message)
+                    attempts += 1
+                    continue
+            
+            # Validasi input boolean
+            true_inputs = ['1', 'true', 't', 'y', 'yes', 'ya', 'iya', true_label.lower()]
+            false_inputs = ['0', 'false', 'f', 'n', 'no', 'tidak', 'ga', false_label.lower()]
+            
+            if raw in true_inputs:
+                return true_value
+            elif raw in false_inputs:
+                return false_value
+            else:
+                print(f"{error_message} (Harap masukkan 0 untuk {false_label} atau 1 untuk {true_label})")
+                attempts += 1
+                
+                # Check max retry
+                if max_retry and attempts >= max_retry:
+                    print("❌ Terlalu banyak percobaan. menggunakan default.")
+                    return default
+                continue
 
         # Prompt khusus untuk fileselect
         if data_type == "fileselect":
@@ -141,7 +203,7 @@ def universal_input(
                     continue
             
             print(f"\n{title}")
-            print("Daftar file yang tersedia:")
+            
             
             # Prepare files for display and output
             display_files = []
@@ -180,7 +242,7 @@ def universal_input(
                 mark = " (default)" if is_default else ""
                 print(f" {i:2d}. {display_name} [{file_size} bytes, modified: {file_mtime}]{mark}")
             
-            prompt = f"Pilih file (1-{len(files)})"
+            prompt = f"\n:: Select file (1-{len(files)})"
             if output_type == "filename":
                 prompt += " [output: nama file]"
             elif output_type == "relative":
